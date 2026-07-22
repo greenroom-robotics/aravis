@@ -83,6 +83,8 @@ struct _GstAravis {
 	char *features;
 
 	gboolean add_reference_timestamp_meta;
+
+	volatile gint flushing;	/* atomic; set by unlock() to break create()'s buffer wait */
 };
 
 struct _GstAravisClass {
