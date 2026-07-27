@@ -1,0 +1,35 @@
+name: Tag & Release (pixi)
+on:
+  workflow_dispatch:
+    inputs:
+      changelog:
+        type: boolean
+        default: false
+        description: Generate and commit CHANGELOG.md
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: runs-on=${{ github.run_id }}/runner=2cpu-linux-x64
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: greenroom-robotics/mise/.github/actions/release@v8
+        with:
+          package: aravis
+          changelog: ${{ inputs.changelog }}
+          package-dir: .
+          # main tracks upstream aravis; the GR patch stack lives on
+          # greenroom/main. Deliberately not a versioned branch name — this
+          # survives a rebase onto a new upstream release without a CI edit.
+          release-branches: greenroom/main
+          gh-app-client-id: ${{ secrets.GH_APP_CLIENT_ID }}
+          gh-app-private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}

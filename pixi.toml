@@ -1,0 +1,46 @@
+# Greenroom pixi-native packaging for this aravis fork.
+#
+# Upstream aravis builds with meson, and there is no pixi-build-meson backend,
+# so the build is driven through pixi-build-rattler-build + recipe.yaml. The
+# recipe is the source of truth for binary dependencies (the backend rejects
+# binary deps in this manifest); this file only declares the package identity
+# and the backend.
+#
+# Consumed by the buildfarm via ros-recipes/pixi_native_packages.yaml. Released
+# by .github/workflows/release-pixi.yml, which tags `aravis@<version>` and opens
+# the ros-recipes rev-bump PR.
+
+[workspace]
+name = "aravis"
+channels = [
+  "http://localhost:12222/general",
+  "https://prefix.dev/conda-forge",
+]
+platforms = ["linux-64", "linux-aarch64"]
+preview = ["pixi-build"]
+
+[dependencies]
+aravis = { path = "." }
+
+[package]
+name = "aravis"
+# Tracks the upstream release this fork is based on. GR-only changes bump the
+# patch component (0.8.33 -> 0.8.34), so the conda version diverges from
+# meson.build's project version once we ship a fix ahead of upstream.
+version = "0.8.33"
+
+[package.build.backend]
+name = "pixi-build-rattler-build"
+version = "*"
+channels = [
+  "https://prefix.dev/pixi-build-backends",
+  "https://prefix.dev/conda-forge",
+]
+
+# No [package.build.config] build-number: pixi-build-rattler-build rejects that
+# key outright (it accepts only debug-dir / extra-input-globs / experimental /
+# recipe). The build number lives in recipe.yaml instead. The buildfarm's
+# channel-skip check therefore reads 0 for this package — fine at
+# rebuild_epoch 0, but a non-zero epoch makes `mise build-recipes` insert the
+# key and the build then fails to start. See the ros-recipes PR for the
+# follow-up on the mise side.
