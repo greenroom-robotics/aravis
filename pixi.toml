@@ -36,11 +36,3 @@ channels = [
   "https://prefix.dev/pixi-build-backends",
   "https://prefix.dev/conda-forge",
 ]
-
-# No [package.build.config] build-number: pixi-build-rattler-build rejects that
-# key outright (it accepts only debug-dir / extra-input-globs / experimental /
-# recipe). The build number lives in recipe.yaml instead. The buildfarm's
-# channel-skip check therefore reads 0 for this package — fine at
-# rebuild_epoch 0, but a non-zero epoch makes `mise build-recipes` insert the
-# key and the build then fails to start. See the ros-recipes PR for the
-# follow-up on the mise side.

@@ -18,8 +18,6 @@ source:
   use_gitignore: true
 
 build:
-  # Keep in lockstep with `[package.build.config] build-number` in pixi.toml —
-  # that key is what the buildfarm's channel-skip check reads.
   number: 0
   script: ${{ '$RECIPE_DIR/build.sh' }}
 
@@ -38,9 +36,7 @@ requirements:
     - libxml2-devel
     - libusb
     # Keep host resolution inside the conda-forge 1.28.x cohort (<1.28.5 —
-    # gst-plugins-ugly tops out at 1.28.4). Without the floor, gst-plugins-base
-    # resolves to a stray 1.20.3 on the GR channel and the run-exports demand
-    # an unsolvable gstreamer/gst-plugins-base mix.
+    # gst-plugins-ugly tops out at 1.28.4).
     - gstreamer >=1.28,<1.28.5
     - gst-plugins-base >=1.28,<1.28.5
   run:
