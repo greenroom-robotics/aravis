@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+#
+# Built by pixi-build-rattler-build (see pixi.toml) — the backend supplies the
+# source from this checkout, so `source: path: .` rather than a git URL.
+#
+# Moved here from ros-recipes/vendor_recipes/aravis/ so the fork can publish
+# its own conda instead of needing a hand-edited rev bump in another repo.
+#
+# The GR deltas (add-reference-timestamp-meta on aravissrc, and the
+# teardown-deadlock unlock() fix) are commits on this branch, not patches.
+
+package:
+  name: aravis
+  version: 0.8.33
+
+source:
+  path: .
+  use_gitignore: true
+
+build:
+  number: 0
+  script: ${{ '$RECIPE_DIR/build.sh' }}
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
+    - meson
+    - ninja
+    - pkg-config
+    - gettext
+  host:
+    - glib
+    - zlib
+    - libxml2
+    - libxml2-devel
+    - libusb
+    # Keep host resolution inside the conda-forge 1.28.x cohort (<1.28.5 —
+    # gst-plugins-ugly tops out at 1.28.4).
+    - gstreamer >=1.28,<1.28.5
+    - gst-plugins-base >=1.28,<1.28.5
+  run:
+
+about:
+  license: LGPL-2.1-or-later
+  summary: GenICam GigE Vision / USB3 Vision camera library.
+  homepage: https://github.com/AravisProject/aravis
+  repository: https://github.com/Greenroom-Robotics/aravis
