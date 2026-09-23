@@ -36,3 +36,7 @@ channels = [
   "https://prefix.dev/pixi-build-backends",
   "https://prefix.dev/conda-forge",
 ]
+
+[package.build.config]
+# load_from_file in recipe.yaml is experimental in rattler-build
+experimental = true
