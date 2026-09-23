@@ -35,10 +35,8 @@ requirements:
     - libxml2
     - libxml2-devel
     - libusb
-    # Keep host resolution inside the conda-forge 1.28.x cohort (<1.28.5 —
-    # gst-plugins-ugly tops out at 1.28.4).
-    - gstreamer >=1.28,<1.28.5
-    - gst-plugins-base >=1.28,<1.28.5
+    - gstreamer 1.28.*
+    - gst-plugins-base 1.28.*
   run:
 
 about:
