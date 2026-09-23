@@ -11,7 +11,7 @@
 
 package:
   name: aravis
-  version: 0.8.33
+  version: ${{ load_from_file("pixi.toml").package.version }}
 
 source:
   path: .
@@ -35,8 +35,9 @@ requirements:
     - libxml2
     - libxml2-devel
     - libusb
-    - gstreamer 1.28.*
-    - gst-plugins-base 1.28.*
+    # Oldest patch of the minor, so the run-export floor is >=1.28.0
+    - gstreamer 1.28.0.*
+    - gst-plugins-base 1.28.0.*
   run:
 
 about:
