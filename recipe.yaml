@@ -35,9 +35,8 @@ requirements:
     - libxml2
     - libxml2-devel
     - libusb
-    # Oldest patch of the minor, so the run-export floor is >=1.28.0
-    - gstreamer 1.28.0.*
-    - gst-plugins-base 1.28.0.*
+    - gstreamer 1.26.11.*
+    - gst-plugins-base 1.26.11.*
   run:
 
 about:
